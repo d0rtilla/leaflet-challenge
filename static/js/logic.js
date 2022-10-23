@@ -47,13 +47,59 @@ d3.json(url).then(data => {
     var depth_array = [];
 
     for (var i = 0; i < features.length; i++) {
-        var coordinates = features[1].geometry.coordinates;
+        var coordinates = features[i].geometry.coordinates;
         var latitude = coordinates[1];
         var longitude = coordinates[0];
 
         var depth = coordinates[2];
         depth_array.push(depth);
-    }
-})
+        var properties = features[i].properties;
+       
+        var place = properties.place;
+        var magnitude = properties.mag;
+
+    
+
+        circles = L.circleMarker([latitude, longitude], {
+            color: "black",
+            weight: 1,
+            fillColor: colorCircle(depth),
+            opactiy: 1,
+            fillOpacity: 1,
+            radius: sizeCircle(magnitude)
+        }).bindPopup(`<h3>${place}</h3><br/>Magnitude: ${magnitude}<br/>Depth: ${depth} km`).addTo(earthquakeMap);
+    };
+
+    var info = L.control({position:"topright"});
+
+    info.onAdd = function() {
+        var div = L.DomUtil.create("div","info");
+        var title = "<h1>Earthquakes in the Last 7 Days</h1>"
+        div.innerHTML = title;
+
+        return div
+    };
+
+    var legend  = L.control({ position : "bottomright"});
+
+    legend.onAdd = function() {
+        var div = L.DomUtil.create("div", "legend");
+        var limits = [-10, 10, 30, 50, 70, 90];
+        var title = "<h2>Depth in km</h2>"
+
+        div.innerHTML = title;
+
+        for (var i = 0; i < limits.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + colorCircle(limits[i] + 1) + '"></i> ' +
+                limits[i] + (limits[i + 1] ? '&ndash;' + limits[i + 1] + '<br>' : '+');
+        }
+
+        return div;
+    };
+
+    legend.addTo(earthquakeMap);
+    info.addTo(earthquakeMap);
+});
 
 

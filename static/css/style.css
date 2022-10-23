@@ -1,7 +1,8 @@
 .legend {
   line-height: 30px;
   background-color:white;
-  padding: 10px}
+  padding: 10px;
+}
 
   .legend i {
     width:40px;
@@ -20,11 +21,3 @@ html {
   height: 100%;
 }
 
-.leaflet-control-layers-list{
-  font-size: 20px;
-}
-
-.leaflet-popup-content{
-  font-size:8px;
-  width:100px
-}
