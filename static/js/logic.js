@@ -67,7 +67,7 @@ d3.json(url).then(data => {
             opactiy: 1,
             fillOpacity: 1,
             radius: sizeCircle(magnitude)
-        }).bindPopup(`<h3>${place}</h3><br/>Magnitude: ${magnitude}<br/>Depth: ${depth} km`).addTo(earthquakeMap);
+        }).bindPopup(`<h3>${place}</h3><br/>Magnitude: ${magnitude}<br/>Depth: ${depth} km<br/> Coordinates: ${latitude}, ${longitude}`).addTo(earthquakeMap);
     };
 
     var info = L.control({position:"topright"});
